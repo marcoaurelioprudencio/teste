@@ -1,4 +1,5 @@
-[00:00:02.034] Server  LOG      ✓ Ready in 1484ms
-[00:00:05.060] Server  LOG      ○ Compiling / ...
-[00:00:15.383] Server  WARN     ⚠ Cross origin request detected from 09de8aa8-115f-4ad1-b607-e250927814fd-00-vmjzhc3ndpld.spock.replit.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+[00:00:01.545] Server  LOG      ✓ Ready in 1085ms
+[00:00:04.568] Server  LOG      ○ Compiling / ...
+[00:00:15.486] Server  WARN     ⚠ Cross origin request detected from 09de8aa8-115f-4ad1-b607-e250927814fd-00-vmjzhc3ndpld.spock.replit.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[00:00:32.592] Server  ERROR   [ChatBot API] Erro na API Gemini: ApiError: {"error":{"code":429,"message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. ","status":"RESOURCE_EXHAUSTED"}}
