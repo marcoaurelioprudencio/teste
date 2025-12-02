@@ -1,8 +1,8 @@
-[00:00:02.305] Server  LOG      ✓ Ready in 1773ms
-[00:00:05.348] Server  LOG      ○ Compiling / ...
-[00:00:19.742] Server  WARN     ⚠ Cross origin request detected from ee1b84b8-9a4d-4ffe-9212-b692b4e1cc1a-00-d31ghvlj7lk6.worf.replit.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+[00:00:02.376] Server  LOG      ✓ Ready in 1763ms
+[00:00:05.407] Server  LOG      ○ Compiling / ...
+[00:00:17.924] Server  WARN     ⚠ Cross origin request detected from ee1b84b8-9a4d-4ffe-9212-b692b4e1cc1a-00-d31ghvlj7lk6.worf.replit.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
-[00:00:20.008] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:00:18.282] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -37,68 +37,6 @@ It can also happen if the client has a browser extension installed which messes 
                         >
                   ...
 
-[00:00:39.140] Server  WARN     ⚠ Cross origin request detected from 127.0.0.1 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+[00:00:31.532] Server  WARN     ⚠ Cross origin request detected from 127.0.0.1 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
-[00:00:39.322] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:40.104] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-%s%s https://react.dev/link/hydration-mismatch 
-
-  ...
-    <RedirectBoundary>
-      <RedirectErrorBoundary router={{...}}>
-        <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} segmentPath={[...]} ...>
-          <SegmentViewNode type="page" pagePath="page.tsx">
-            <SegmentTrieNode>
-            <ClientPageRoot Component={function Home} serverProvidedParams={{...}}>
-              <Home params={Promise} searchParams={Promise}>
-                <div className="min-h-scre...">
-                  <Header>
-                    <header className="border-b b...">
-                      <div className="max-w-[140...">
-                        <div className="flex items...">
-                          <div>
-                          <nav>
-                          <div className="flex items...">
-                            <div className="hidden lg:...">
-                              <Search>
-                              <Input placeholder="Pesquisar..." className="border-0 b...">
-                                <input
-                                  type={undefined}
-                                  data-slot="input"
-                                  className="file:text-foreground placeholder:text-muted-foreground selection:bg-prima..."
-                                  placeholder="Pesquisar..."
--                                 style={{caret-color:"transparent"}}
-                                >
-                            ...
-                  <main className="max-w-[140...">
-                    <SearchBar onSearch={function handleSearch}>
-                      <div className="w-full bg-...">
-                        <div className="flex items...">
-                          <div className="flex-1 fle...">
-                            <Search>
-                            <Input placeholder="Pesquise p..." value="" onChange={function onChange} ...>
-                              <input
-                                type={undefined}
-                                data-slot="input"
-                                className="file:text-foreground placeholder:text-muted-foreground selection:bg-primary..."
-                                placeholder="Pesquise por notícias, legislação, IBS/CBS, GTIN..."
-                                value=""
-                                onChange={function onChange}
-                                onKeyPress={function onKeyPress}
--                               style={{caret-color:"transparent"}}
-                              >
-                          ...
-                    ...
-                  ...
-          ...
-        ...
-
+[00:00:31.706] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
