@@ -14,6 +14,7 @@ CTributária News is a comprehensive Brazilian tax news and information portal b
 ✅ Development server running on port 5000  
 ✅ Production deployment configured  
 ✅ All dependencies installed (with legacy peer deps due to React 19 compatibility)
+✅ ChatBot AI funcionando com Google Gemini + fallback para respostas comuns
 
 ## Recent Changes (December 2, 2025)
 - Configured Next.js for Replit environment with proper host binding (0.0.0.0:5000)
@@ -21,6 +22,11 @@ CTributária News is a comprehensive Brazilian tax news and information portal b
 - Set up workflow for development server
 - Configured autoscale deployment for production
 - Installed all dependencies with `--legacy-peer-deps` flag to resolve React 19 compatibility
+- **ChatBot AI melhorado:**
+  - Criada API route server-side (/api/chat) usando Google Gemini AI
+  - Removida chave API do código cliente (segurança)
+  - Implementado sistema de fallback com respostas pré-definidas para IBS, CBS, GTIN, Split Payment, Imposto Seletivo e Reforma Tributária
+  - Tratamento de erros para rate limit e autenticação
 
 ## Project Architecture
 
