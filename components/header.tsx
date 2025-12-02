@@ -10,7 +10,7 @@ import Link from "next/link"
 import { useTheme } from "./theme-provider"
 
 export function Header() {
-  const { theme, toggleTheme } = useTheme()
+  const { theme, toggleTheme, mounted } = useTheme()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
@@ -91,7 +91,11 @@ export function Header() {
                 onClick={toggleTheme}
                 className="text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors rounded-full"
               >
-                {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                {mounted ? (
+                  theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />
+                ) : (
+                  <Moon className="h-5 w-5" />
+                )}
               </Button>
 
               <Button

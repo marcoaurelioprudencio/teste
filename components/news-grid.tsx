@@ -4,14 +4,16 @@ import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Calendar, TrendingUp, FileQuestion, X, Share2, Bookmark } from "lucide-react"
+import { ArrowRight, Calendar, TrendingUp, FileQuestion, Share2, Bookmark } from "lucide-react"
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { ShareDialog } from "@/components/share-dialog"
 
 interface NewsArticle {
   id: number
@@ -287,48 +289,82 @@ interface NewsGridProps {
 }
 
 function formatContent(content: string) {
-  return content.split('\n').map((line, index) => {
+  const lines = content.split('\n')
+  const elements: React.ReactNode[] = []
+  let i = 0
+
+  while (i < lines.length) {
+    const line = lines[i]
+    
     if (line.startsWith('**') && line.endsWith('**')) {
-      return (
-        <h3 key={index} className="text-lg font-bold text-[#0046B3] mt-6 mb-3">
+      elements.push(
+        <h3 key={i} className="text-lg font-bold text-[#0046B3] mt-6 mb-3">
           {line.replace(/\*\*/g, '')}
         </h3>
       )
-    }
-    if (line.startsWith('• ')) {
-      return (
-        <li key={index} className="flex items-start gap-2 ml-4 mb-2">
-          <span className="text-[#FF7A00] font-bold mt-1">•</span>
-          <span>{line.substring(2)}</span>
-        </li>
+      i++
+    } else if (line.startsWith('• ')) {
+      const listItems: React.ReactNode[] = []
+      while (i < lines.length && lines[i].startsWith('• ')) {
+        listItems.push(
+          <li key={i} className="flex items-start gap-2 mb-2">
+            <span className="text-[#FF7A00] font-bold mt-1">•</span>
+            <span>{lines[i].substring(2)}</span>
+          </li>
+        )
+        i++
+      }
+      elements.push(
+        <ul key={`ul-${i}`} className="ml-4 mb-4">
+          {listItems}
+        </ul>
       )
-    }
-    if (/^\d+\.\s/.test(line)) {
-      return (
-        <li key={index} className="flex items-start gap-2 ml-4 mb-2">
-          <span className="text-[#FF7A00] font-bold">{line.match(/^\d+/)?.[0]}.</span>
-          <span>{line.replace(/^\d+\.\s/, '')}</span>
-        </li>
+    } else if (/^\d+\.\s/.test(line)) {
+      const listItems: React.ReactNode[] = []
+      while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
+        listItems.push(
+          <li key={i} className="flex items-start gap-2 mb-2">
+            <span className="text-[#FF7A00] font-bold">{lines[i].match(/^\d+/)?.[0]}.</span>
+            <span>{lines[i].replace(/^\d+\.\s/, '')}</span>
+          </li>
+        )
+        i++
+      }
+      elements.push(
+        <ol key={`ol-${i}`} className="ml-4 mb-4">
+          {listItems}
+        </ol>
       )
+    } else if (line.trim() === '') {
+      elements.push(<div key={i} className="h-2" />)
+      i++
+    } else {
+      elements.push(
+        <p key={i} className="text-gray-700 leading-relaxed mb-3">
+          {line}
+        </p>
+      )
+      i++
     }
-    if (line.trim() === '') {
-      return <div key={index} className="h-2" />
-    }
-    return (
-      <p key={index} className="text-gray-700 leading-relaxed mb-3">
-        {line}
-      </p>
-    )
-  })
+  }
+
+  return elements
 }
 
 export function NewsGrid({ searchQuery = "", activeFilters = [] }: NewsGridProps) {
   const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isShareDialogOpen, setIsShareDialogOpen] = useState(false)
+  const [shareArticle, setShareArticle] = useState<NewsArticle | null>(null)
 
   const handleReadMore = (article: NewsArticle) => {
     setSelectedArticle(article)
     setIsDialogOpen(true)
+  }
+
+  const handleShare = (article: NewsArticle) => {
+    setShareArticle(article)
+    setIsShareDialogOpen(true)
   }
 
   const filteredArticles = newsArticles.filter((article) => {
@@ -463,6 +499,9 @@ export function NewsGrid({ searchQuery = "", activeFilters = [] }: NewsGridProps
                   <DialogTitle className="text-2xl font-bold text-white leading-tight">
                     {selectedArticle.title}
                   </DialogTitle>
+                  <DialogDescription className="sr-only">
+                    Leia a notícia completa sobre {selectedArticle.category}
+                  </DialogDescription>
                 </DialogHeader>
                 <div className="flex items-center gap-4 mt-4">
                   <div className="flex items-center gap-2 text-sm text-white/80">
@@ -492,7 +531,17 @@ export function NewsGrid({ searchQuery = "", activeFilters = [] }: NewsGridProps
                   <span className="font-semibold">Fonte:</span> Portal News CTributária
                 </p>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="gap-2"
+                    onClick={() => {
+                      setIsDialogOpen(false)
+                      if (selectedArticle) {
+                        handleShare(selectedArticle)
+                      }
+                    }}
+                  >
                     <Share2 className="h-4 w-4" />
                     Compartilhar
                   </Button>
@@ -506,6 +555,12 @@ export function NewsGrid({ searchQuery = "", activeFilters = [] }: NewsGridProps
           )}
         </DialogContent>
       </Dialog>
+
+      <ShareDialog
+        isOpen={isShareDialogOpen}
+        onClose={() => setIsShareDialogOpen(false)}
+        title={shareArticle?.title || ""}
+      />
     </div>
   )
 }

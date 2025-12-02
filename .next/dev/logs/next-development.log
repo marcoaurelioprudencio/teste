@@ -1,8 +1,8 @@
-[00:00:02.376] Server  LOG      ✓ Ready in 1763ms
-[00:00:05.407] Server  LOG      ○ Compiling / ...
-[00:00:17.924] Server  WARN     ⚠ Cross origin request detected from ee1b84b8-9a4d-4ffe-9212-b692b4e1cc1a-00-d31ghvlj7lk6.worf.replit.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+[00:00:01.379] Server  LOG      ✓ Ready in 922ms
+[00:00:04.420] Server  LOG      ○ Compiling / ...
+[00:00:16.380] Server  WARN     ⚠ Cross origin request detected from ee1b84b8-9a4d-4ffe-9212-b692b4e1cc1a-00-d31ghvlj7lk6.worf.replit.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
-[00:00:18.282] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:00:16.708] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -37,6 +37,6 @@ It can also happen if the client has a browser extension installed which messes 
                         >
                   ...
 
-[00:00:31.532] Server  WARN     ⚠ Cross origin request detected from 127.0.0.1 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+[00:00:30.836] Server  WARN     ⚠ Cross origin request detected from 127.0.0.1 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
-[00:00:31.706] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:30.936] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
