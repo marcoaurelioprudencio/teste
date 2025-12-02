@@ -6,32 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { MessageCircle, Send, X, Bot, Sparkles, Loader2 } from 'lucide-react'
 
-const GEMINI_API_KEY = "AIzaSyBn0vlDph-IyM2WH8x5ouISIfjSbLKw8l4"
-const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
 const WHATSAPP_NUMBER = "5534998623164"
 const WHATSAPP_MESSAGE = "Olá! Preciso de ajuda com questões tributárias."
-
-const SYSTEM_CONTEXT = `Você é um assistente especializado em tributação brasileira e revisão fiscal, trabalhando para a CTributária. Você domina TODOS os aspectos da Reforma Tributária, legislação fiscal, obrigações acessórias e compliance tributário.
-
-IBS (Imposto sobre Bens e Serviços): Tributo subnacional que substitui ICMS + ISS. Composto por IBS Estadual (9%) e IBS Municipal (8%), totalizando 17%. Implementação gradual de 2029 a 2033.
-
-CBS (Contribuição sobre Bens e Serviços): Tributo federal (10%) que substitui PIS + COFINS. Entra em vigor em 2027.
-
-IVA DUAL: Modelo brasileiro com IBS + CBS = ~27%. Tributos calculados "por fora" com não-cumulatividade plena.
-
-SPLIT PAYMENT: Retenção automática pelo banco. Ao parcelar, cada parcela tem 27% retido direto para o governo, fornecedor recebe líquido, comprador ganha crédito gradualmente.
-
-GTIN: "CPF do produto". Obrigatório desde 01/10/2025. Mesmo NCM pode ter alíquotas diferentes por GTIN.
-
-IMPOSTO SELETIVO: LC 214/2025 arts. 416-438. Tributo sobre produtos nocivos (bebidas, cigarros, veículos poluentes). Vigência 2027.
-
-CRONOGRAMA: 2026 testes (0,1% IBS + 0,9% CBS) | 2027 CBS integral | 2029-2033 transição IBS gradual | 2033 modelo completo.
-
-REVISÃO FISCAL: Análise de operações para identificar erros, recuperar créditos tributários, mitigar riscos. Benefícios: recuperação tributos 5 anos, redução carga tributária legal.
-
-COMPLIANCE: Políticas documentadas, segregação funções, revisões periódicas, treinamento contínuo, tecnologia validadora.
-
-Para dúvidas complexas: WhatsApp (34) 99862-3164 | Tel (34) 3224-0123 | https://ctributaria.com.br`
 
 export function ChatBot() {
   const [isOpen, setIsOpen] = useState(false)
@@ -50,47 +26,26 @@ export function ChatBot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages, isTyping])
 
-  const getGeminiResponse = async (userInput: string): Promise<string> => {
+  const getAIResponse = async (userInput: string): Promise<string> => {
     try {
-      const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                {
-                  text: `${SYSTEM_CONTEXT}\n\nPergunta do usuário: ${userInput}\n\nResponda de forma clara, didática e em português brasileiro.`,
-                },
-              ],
-            },
-          ],
-          generationConfig: {
-            temperature: 0.4,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 2048,
-          },
-        }),
+        body: JSON.stringify({ message: userInput }),
       })
 
-      if (!response.ok) {
-        throw new Error("Erro na API do Gemini")
-      }
-
       const data = await response.json()
-      const aiResponse = data.candidates[0]?.content?.parts[0]?.text
 
-      if (!aiResponse) {
-        throw new Error("Resposta vazia da API")
+      if (!response.ok) {
+        throw new Error(data.error || "Erro ao processar a pergunta")
       }
 
-      return aiResponse
+      return data.response
     } catch (error) {
-      console.error("[v0] Erro ao chamar Gemini AI:", error)
-      return "Desculpe, tive um problema técnico ao processar sua pergunta."
+      console.error("[ChatBot] Erro:", error)
+      return "Desculpe, tive um problema técnico ao processar sua pergunta. Por favor, tente novamente."
     }
   }
 
@@ -120,7 +75,7 @@ export function ChatBot() {
     setIsTyping(true)
 
     try {
-      const response = await getGeminiResponse(userInput)
+      const response = await getAIResponse(userInput)
       
       if (shouldRedirectToWhatsApp(response)) {
         setMessages((prev) => [
